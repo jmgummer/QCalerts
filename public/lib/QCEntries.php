@@ -19,7 +19,7 @@ class QCEntries extends Dbmethods{
 		$table = 'tempTable_'.$code."_".$rand;
 
 		$sq = "CREATE TEMPORARY  TABLE IF NOT EXISTS ".  $table ." (auto_id int(100) not null auto_increment primary key,qc_name varchar(200) not null,station varchar(200) not null,editor_name varchar(200) not null,`date` date not null,`time` time not null,brand varchar(100) not null,entry_type varchar(200) not null,edit_date date not null)";
-		$q= $con->query($sq) or die("\nError Create: \n".$con->error."\n\n$sq\n");
+		$q= $con->query($sq) or die("\nError Create: \n".$con->error."\n\n");
 		return $table;
 	}
 
