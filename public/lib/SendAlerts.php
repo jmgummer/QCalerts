@@ -40,7 +40,7 @@ class SendAlerts{
     		if(!$mail->Send()) {
      			echo "Mailer Error: " . $mail->ErrorInfo ."\n";
    			}else{
-   				echo "Mail set To $email";
+   				echo "Mail set To $email\n";
    			}
 		}
 	}

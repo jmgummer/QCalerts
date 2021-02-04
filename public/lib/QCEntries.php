@@ -19,7 +19,7 @@ class QCEntries extends Dbmethods{
 		$table = 'tempTable_'.$code."_".$rand;
 
 		$sq = "CREATE TEMPORARY  TABLE IF NOT EXISTS ".  $table ." (auto_id int(100) not null auto_increment primary key,qc_name varchar(200) not null,station varchar(200) not null,editor_name varchar(200) not null,`date` date not null,`time` time not null,brand varchar(100) not null,entry_type varchar(200) not null,edit_date date not null)";
-		$q= $con->query($sq) or die("<br>Error Create: <br>".$con->error."<br><br>$sq<br>");
+		$q= $con->query($sq) or die("\nError Create: \n".$con->error."\n\n$sq\n");
 		return $table;
 	}
 
@@ -27,7 +27,7 @@ class QCEntries extends Dbmethods{
 		$con = $this->RPP;
 
 		$sq = "SELECT user_id,firstname,username FROM users WHERE `status` = 1 and `level` = 0 order by firstname";
-		$q = $con->query($sq) or die("Error :<br>".$con->error);
+		$q = $con->query($sq) or die("Error :\n".$con->error);
 		$results= [];
 		if ($q && $q->num_rows > 0) {
 			while ($row = $q->fetch_assoc()) {
@@ -43,35 +43,35 @@ class QCEntries extends Dbmethods{
 		foreach ($users as  $value) {
 			$user_id = $value['user_id'];
 			$firstname = rtrim($value['firstname']);
-			$username = $value['username'];echo "User:- $username || User ID:- $user_id<br>";
+			$username = $value['username'];echo "User:- $username || User ID:- $user_id\n";
 
 			$qc_name = $firstname;
 
 			if(!strpos($firstname, ' ')  || strlen($firstname) < 5){
 				$qc_name = $username;
 			}
-			echo "<br><br>Analysing For :- $qc_name<br>";			
+			echo "\n\nAnalysing For :- $qc_name\n";			
 
 			$manualsAds = $this->getAds($user_id,$sdate,$edate);
 			$manualPrs = $this->getPrs($username,$sdate,$edate);
 			$size = sizeof($manualsAds);
 			$prsize = sizeof($manualPrs);
 			if ($size > 0) {
-				$admgs = "Number Of AD Entries:- $size <br> ";
+				$admgs = "Number Of AD Entries:- $size \n ";
 
 				//Inserting Records
 				$this->InsertRecords($table,$qc_name,$manualsAds,'ad');
 			} else {
-				$admgs = "No AD Entries <br>";
+				$admgs = "No AD Entries \n";
 			}
 
 			if ($prsize > 0) {
-				$prms =  "Number Of PR Entries:- $prsize <br> ";
+				$prms =  "Number Of PR Entries:- $prsize \n ";
 
 				//Inserting Records
 				$this->InsertRecords($table,$qc_name,$manualPrs,'pr');
 			} else {
-				$prms = "No PR Entries <br> ";
+				$prms = "No PR Entries \n ";
 			}
 			
 			echo "$admgs $prms";
@@ -134,7 +134,7 @@ class QCEntries extends Dbmethods{
 
 	public function InsertRecords($table,$qc_name,$array,$dept){
 		$con = $this->PR;
-		echo "Inserting Records<br>";
+		echo "Inserting Records\n";
 
 		$count = 0;
 		foreach ($array as  $row) {
@@ -154,13 +154,13 @@ class QCEntries extends Dbmethods{
 				}
 			}
 			$editor = $this->getWorkAssignTO($reel_date,$reel_time,$station_code);
-			echo "Station Assigned to: $editor <br>";
+			echo "Station Assigned to: $editor \n";
 
 			$sq = "INSERT IGNORE INTO $table (qc_name,station,editor_name,`date`,`time`,brand,entry_type,edit_date)
 					VALUES('$qc_name','$station','$editor','$reel_date','$reel_time','$brand_name','$entry_type','$edit_date')";
 			$q = $con->query($sq) or die("Error Inserting ".$con->error);
 			if ($q) {
-				echo "$count . Successfully Inserted...<br>";
+				echo "$count . Successfully Inserted...\n";
 			}
 			$count ++;
 		}
@@ -225,9 +225,9 @@ class QCEntries extends Dbmethods{
 		$table = $this->tempTable();
 		$this->GetEntries($table,$sdate,$edate);
 
-		echo "Generating HTML Data<br>";
+		echo "Generating HTML Data\n";
 		$sq = "SELECT qc_name,station,editor_name,date,time,brand,entry_type,edit_date FROM $table ORDER BY editor_name,`date`,`time`,qc_name,station";
-		$q = $con->query($sq) or die("Error Getting Data<br>".$con->error);
+		$q = $con->query($sq) or die("Error Getting Data\n".$con->error);
 		if ($q && $q->num_rows > 0) {
 			$runner = new HTMLCreater;
 			$PostMan = new SendAlerts($phpMailer,$contacts,$From,$Name);
