@@ -9,7 +9,7 @@ ini_set('memory_limit', '4096M');
 
 $today = date('Y-m-d');
 $monthly = date('Y-m-06');
-$today = '2021-02-06';
+//$today = '2021-02-06';
 if (strtotime($today) == strtotime($monthly) && date('D',strtotime($today)) == 'Mon' && date('w', strtotime($today)) == 1) {
 	$startdate = date('Y-m-01',strtotime('- 1 month'));
 	$endate = date('Y-m-t',strtotime($startdate));
