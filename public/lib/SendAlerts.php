@@ -11,7 +11,7 @@ class SendAlerts{
 		$this->name = $Name;
 	}
 
-	public function SendthisAlert($message,$attachment){
+	public function SendthisAlert($subject,$message,$attachment){
 		$phpmailer = $this->phpmailer;
 		$contacts = $this->contacts;
 		$from = $this->from;
@@ -34,7 +34,7 @@ class SendAlerts{
     		$today_formatted=date("d-m-Y");
     		$this_time=date("H:i:s");
     		$mail->IsHTML(true); // set email format to HTML
-    		$mail->Subject = /*$subject .*/"Test : $today_formatted $this_time";
+    		$mail->Subject = $subject;
     		$mail->Body = $message;
     		$mail->AddAttachment($attachment);
     		if(!$mail->Send()) {

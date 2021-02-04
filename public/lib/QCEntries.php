@@ -211,7 +211,7 @@ class QCEntries extends Dbmethods{
 		}
 	}
 
-	public function generateHTML($sdate,$edate){
+	public function generateHTML($sdate,$edate,$subject){
 		$con = $this->PR;
 		$code = $this->code;
 		$config = $this->settings;
@@ -240,7 +240,7 @@ class QCEntries extends Dbmethods{
 			$message = $runner->GenerateMessage($results,$sdate,$edate);
 			$attachment = $sheet->CreateExcelSheet($code,$results,$sdate,$edate);
 			
-			$PostMan->SendthisAlert($message,$attachment);
+			$PostMan->SendthisAlert($subject,$message,$attachment);
 		}
 
 	}

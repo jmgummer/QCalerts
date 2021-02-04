@@ -74,11 +74,12 @@ class HTMLCreater{
 	}
 
 	public function GenerateMessage($dataArray,$sdate,$edate){
-		$greetings = $this->Greetings;
+		$greetings = $this->Greetings();
 		$table = $this->generatehtml($dataArray);
 
 		$msg = "$greetings Sir/Madam,<br>
-		Below and attached are errors captured by the QC team for the period of $sdate and $end. <br><br>$table";
+		Below and attached are errors captured by the QC team for the period of $sdate and $edate. <br><br>$table<br>";
+		return $msg;
 	}
 
 	public function Greetings(){
@@ -98,3 +99,4 @@ class HTMLCreater{
             }
         }
 }
+
