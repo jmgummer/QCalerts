@@ -1,8 +1,8 @@
 <?php
 $config = (object)array(
-	'server'=>'34.121.198.20',
-	'user'=>'jkinyua',
-	'password'=>'Med#2020@X',
+	'server'=>'localhost',
+	'user'=>'root',
+	'password'=>'',
 );
 
 
